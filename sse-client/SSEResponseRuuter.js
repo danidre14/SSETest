@@ -1,4 +1,5 @@
-const eveSf = require("event-source-polyfill");
+const EventSource = require("eventsource");
+// const eveSf = require("event-source-polyfill");
 
 async function processMiddlewares(req, res, middlewares = []) {
     for (const middleware of middlewares) {
@@ -150,9 +151,9 @@ function SSEResponseRuuter(eventSourceUrl = "") {
         eventSource: null
     }
     function start() {
-        const eventSource = new eveSf.EventSourcePolyfill(`${eventSourceUrl}/connect`, { heartbeatTimeout: 1000 * 60 });
+        const eventSource = new EventSource(`${eventSourceUrl}/connect`, { heartbeatTimeout: 1000 * 60 });
         eventSource.onopen = function (event) {
-            console.log(event.type + ': ' + event.data);
+            console.log(`Event source ${event.type} and connected.`);
         };
         eventSource.onmessage = function (event) {
             const parsedData = JSON.parse(event.data);
@@ -169,7 +170,7 @@ function SSEResponseRuuter(eventSourceUrl = "") {
             processReq(req);
         };
         eventSource.onerror = function (event) {
-            console.error(`Event source error: ${event.data}`);
+            console.error(`Event source ${event.type}: ${event.message}`);
             eventSource.close();
         };
         vars.eventSource = eventSource;
@@ -195,13 +196,13 @@ function SSEResponseRuuter(eventSourceUrl = "") {
     }
 }
 
-process.on('uncaughtException', function (err) {
-    if (err.cause && typeof err.cause == "object") {
-        const cause = err.cause;
-        if (cause.errno == -4077 && cause.code == "ECONNRESET")
-            return;
-    }
-    throw new Error("Uncaught Exception", { cause: err });
-});
+// process.on('uncaughtException', function (err) {
+//     if (err.cause && typeof err.cause == "object") {
+//         const cause = err.cause;
+//         if (cause.errno == -4077 && cause.code == "ECONNRESET")
+//             return;
+//     }
+//     throw new Error("Uncaught Exception", { cause: err });
+// });
 
 module.exports = SSEResponseRuuter;

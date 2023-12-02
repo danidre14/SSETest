@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "event-source-polyfill": "^1.0.31"
+    "eventsource": "^2.0.2"
   }
 }
