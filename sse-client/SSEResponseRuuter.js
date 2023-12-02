@@ -101,7 +101,7 @@ function createResponse(uid, eventSourceUrl) {
     };
 }
 
-function SSERespondRuuter(eventSourceUrl = "") {
+function SSEResponseRuuter(eventSourceUrl = "") {
     let routeTable = {};
     const processReq = async (req) => {
         const res = createResponse(req.uid, eventSourceUrl);
@@ -204,4 +204,4 @@ process.on('uncaughtException', function (err) {
     throw new Error("Uncaught Exception", { cause: err });
 });
 
-module.exports = SSERespondRuuter;
+module.exports = SSEResponseRuuter;

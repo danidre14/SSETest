@@ -12,7 +12,7 @@ const ruuter = SSERequestRuuter(app, "/events");
 app.get("/calc/:a/:b", async (req, res) => {
     const { query, params } = req;
     try {
-        const result = await ruuter.fetch(`/performcalc/${params.a}/${params.b}?method=${query.method || "add"}`);
+        const result = await ruuter.fetch(`/performcalc/${params.a}/${params.b}?method=${query.method || "add"}`, {}, {ttl:10});
         res.status(200).json(result);
     } catch (err) {
         res.status(200).json(`Error doing calculation: ${err}`);

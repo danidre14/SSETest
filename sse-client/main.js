@@ -1,7 +1,7 @@
-const SSERespondRuuter = require("./SSERespondRuuter");
+const SSEResponseRuuter = require("./SSEResponseRuuter");
 
 const hostUrl = "http://localhost:3001";
-const ruuter = SSERespondRuuter(`${hostUrl}/events`);
+const ruuter = SSEResponseRuuter(`${hostUrl}/events`);
 
 ruuter.get("/params/:id", (req, res, next) => {
     console.log(`Params ${JSON.stringify(req.params)}; Query: ${JSON.stringify(req.query)}, not responding`);
