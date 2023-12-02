@@ -4,9 +4,15 @@ const hostUrl = "http://localhost:3001";
 const ruuter = SSEResponseRuuter(`${hostUrl}/events`);
 
 ruuter.get("/params/:id", (req, res, next) => {
-    console.log(`Params ${JSON.stringify(req.params)}; Query: ${JSON.stringify(req.query)}, not responding`);
+    console.log(`Get Params ${JSON.stringify(req.params)}; Query: ${JSON.stringify(req.query)}`);
 
     res.json({ hey: req.params });
+});
+
+ruuter.post("/params/:id", (req, res, next) => {
+    console.log(`Post Params ${JSON.stringify(req.params)}; Query: ${JSON.stringify(req.query)}; Body: ${JSON.stringify(req.body)}`);
+
+    res.json({ params: req.params, query: req.query, body: req.body });
 });
 
 ruuter.get("/endpoint", (req, res, next) => {
@@ -20,7 +26,7 @@ ruuter.get("/endpoint", (req, res, next) => {
 ruuter.get("/performcalc/:a/:b", (req, res) => {
     const { query, params } = req;
     const method = query.method || "add";
-    const { a:_a = 1, b:_b = 1 } = params;
+    const { a: _a = 1, b: _b = 1 } = params;
 
     const a = parseFloat(_a);
     const b = parseFloat(_b);

@@ -151,7 +151,7 @@ function SSEResponseRuuter(eventSourceUrl = "") {
         eventSource: null
     }
     function start() {
-        const eventSource = new EventSource(`${eventSourceUrl}/connect`, { heartbeatTimeout: 1000 * 60 });
+        const eventSource = new EventSource(`${eventSourceUrl}/connect`);
         eventSource.onopen = function (event) {
             console.log(`Event source ${event.type} and connected.`);
         };
